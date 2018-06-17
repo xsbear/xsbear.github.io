@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Welcome tcomck 4 和 Babel 7 配置 Vue.js 工程模板 | BearNotes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="团队最近开始一个新项目，技术栈采用 Vue.js 2 框架。由于是一个较复杂的大型单页应用，决定使用官方推荐的 webpack 工程作为应用工程脚手架。该工程模板中使用了 webpack 3 和 babel 6，由于 webpack 4 已发布，Babel 7 也出来挺长一段时间了，所以想对工程模板进行升级改造，以尝试工程化开发工具的最新特性。 关键调整webpack工程模板本身是为大型应用设计的">
+<meta name="keywords" content="bear,notes,xsbear,前端开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Welcome tcomck 4 和 Babel 7 配置 Vue.js 工程模板">
+<meta property="og:url" content="http://www.bearnotes.net/2018/06/16/config-vue-project-with-webpack-4-and-babel-7/index.html">
+<meta property="og:site_name" content="BearNotes">
+<meta property="og:description" content="团队最近开始一个新项目，技术栈采用 Vue.js 2 框架。由于是一个较复杂的大型单页应用，决定使用官方推荐的 webpack 工程作为应用工程脚手架。该工程模板中使用了 webpack 3 和 babel 6，由于 webpack 4 已发布，Babel 7 也出来挺长一段时间了，所以想对工程模板进行升级改造，以尝试工程化开发工具的最新特性。 关键调整webpack工程模板本身是为大型应用设计的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/1.png">
+<meta property="og:image" content="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/2.png">
+<meta property="og:image" content="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/3.png">
+<meta property="og:image" content="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/4.png">
+<meta property="og:updated_time" content="2018-06-17T12:02:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Welcome tcomck 4 和 Babel 7 配置 Vue.js 工程模板">
+<meta name="twitter:description" content="团队最近开始一个新项目，技术栈采用 Vue.js 2 框架。由于是一个较复杂的大型单页应用，决定使用官方推荐的 webpack 工程作为应用工程脚手架。该工程模板中使用了 webpack 3 和 babel 6，由于 webpack 4 已发布，Babel 7 也出来挺长一段时间了，所以想对工程模板进行升级改造，以尝试工程化开发工具的最新特性。 关键调整webpack工程模板本身是为大型应用设计的">
+<meta name="twitter:image" content="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="BearNotes" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">BearNotes</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">关注Web开发，拥抱移动互联</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.bearnotes.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-config-vue-project-with-webpack-4-and-babel-7" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/16/config-vue-project-with-webpack-4-and-babel-7/" class="article-date">
+  <time datetime="2018-06-16T09:06:15.000Z" itemprop="datePublished">2018-06-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Welcome tcomck 4 和 Babel 7 配置 Vue.js 工程模板
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>团队最近开始一个新项目，技术栈采用 Vue.js 2 框架。由于是一个较复杂的大型单页应用，决定使用官方推荐的 <a href="https://github.com/vuejs-templates/webpack" target="_blank" rel="noopener">webpack</a> 工程作为应用工程脚手架。该工程模板中使用了 webpack 3 和 babel 6，由于 webpack 4 已发布，Babel 7 也出来挺长一段时间了，所以想对工程模板进行升级改造，以尝试工程化开发工具的最新特性。</p>
+<h2 id="关键调整"><a href="#关键调整" class="headerlink" title="关键调整"></a>关键调整</h2><p>webpack工程模板本身是为大型应用设计的，构建脚本和配置文件的结构相比一般项目稍显复杂，添加了一些开发辅助工具，并且做了一定程度的封装。本次升级也是沿用了此套结构，只是对升级后的几个工具配置项做了调整。几个关键调整：除了 webpack 4 和 Babel 7，配套的 vue-loader 也升级到了 v15（官方的文档已经是v15了）；另外为了配套 webpack 4，<code>extract-text-webpack-plugin</code> 插件也被替换成了<code>mini-css-extract-plugin</code>，并且配合 <code>css-hot-loader</code><br>可实现提取css文件的热替换。主要配置项调整请看下文，前后配置代码差异可以见<a href="https://github.com/xsbear/vue-webpack4-babel7/compare/505c248...36b1805" target="_blank" rel="noopener">这里</a>，完整工程模板库地址：<a href="https://github.com/xsbear/vue-webpack4-babel7" target="_blank" rel="noopener">https://github.com/xsbear/vue-webpack4-babel7</a>，有需要的同学可以直接 clone。</p>
+<h3 id="基础配置-build-webpack-base-conf-js"><a href="#基础配置-build-webpack-base-conf-js" class="headerlink" title="基础配置 build/webpack.base.conf.js"></a>基础配置 build/webpack.base.conf.js</h3><p>这里的主要变化是新的 <code>vue-loader</code> 配置，由于新版配置选项发生变更，原来<code>vue-loader.conf.js</code>里的配置项基本已废弃，本方案直接将<code>transformAssetUrls</code>选项配置在了 <code>vue-loader</code> 的 rule options 里；另外需引入<code>vue-loader/lib/plugin</code>，以确保正确解析 <code>.vue</code>文件 <code>&lt;script&gt;</code>块中的js代码。</p>
+<p><img src="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/1.png" alt="图片描述"></p>
+<h3 id="开发模式配置-webpack-dev-conf-js"><a href="#开发模式配置-webpack-dev-conf-js" class="headerlink" title="开发模式配置 webpack.dev.conf.js"></a>开发模式配置 webpack.dev.conf.js</h3><p>webpack 4 的一个主要变化： 添加 <code>mode</code> 参数，值为 <code>development</code>，移除已废弃的<code>NamedModulesPlugin</code>，<code>NoEmitOnErrorsPlugin</code> 等插件，另外引入 <code>mini-css-extract-plugin</code> 作为css文件提取插件。当然，如果你不打算在开发模式下使用css提取（使用 style-loader 替代），也可以不引入此插件，且在调用<code>utils.styleLoaders</code>方法配置css模块规则时，<code>extract</code> 参数传 <code>false</code>。</p>
+<p><img src="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/2.png" alt="图片描述"></p>
+<h3 id="build-utils-js"><a href="#build-utils-js" class="headerlink" title="#build/utils.js"></a>#build/utils.js</h3><p>对 utils里的 <code>generateLoaders</code> 方法做了调整，替换css提取插件，增加 <code>hotReload</code> 参数，供开发、生产模式选择是否要执行css模块热加载。此方法可以根据传入的 <code>usePostCSS</code> 参数或 <code>loader</code> 参数组装成自定义的css预处理或后处理的 loader 组合，结合 <code>styleLoaders</code> 方法再组装完整的css模块rules，如 <code>.css</code>, <code>.postcss</code>, <code>.sass</code> 等。<code>cssLoaders</code> 方法返回中，枚举了多种css预处理格式，实际项目中可根据自己采用的预处理方案进行选择，无需全部配置，如只使用postcss，后面几个预处理格式都可以注释。</p>
+<p><img src="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/3.png" alt="图片描述"></p>
+<h3 id="生产模式配置-build-webpack-prod-conf-js"><a href="#生产模式配置-build-webpack-prod-conf-js" class="headerlink" title="生产模式配置 build/webpack.prod.conf.js"></a>生产模式配置 build/webpack.prod.conf.js</h3><p>这里的主要调整是为适配 webpack 4 的新配置。同样的，新增参数 mode: ‘production’；比较大的调整是 <code>optimization</code> 配置，替代了之前的 <code>CommonsChunkPlugin</code>, <code>UglifyJsPlugin</code> 等插件。另外如 <code>HashedModuleIdsPlugin</code> 等插件也已废弃，无需再配置。这里的重点是替代 <code>CommonsChunkPlugin</code> 插件的 <code>splitChunks</code> 配置项，目前给出的配置是可以满足 vendor 库和业务公用代码库分离的典型场景，更多分离优化的配置，有需要的同学可查找相关教程，由于不是本文重点，这里就不展开了。</p>
+<p><img src="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/4.png" alt="图片描述"></p>
+<h3 id="Babel-7-配置-babelrc"><a href="#Babel-7-配置-babelrc" class="headerlink" title="Babel 7 配置 .babelrc"></a>Babel 7 配置 .babelrc</h3><p>Babel 7 的相关依赖包需要加上 <code>@babel</code> scope。一个主要变化是 presets 设置由原来的 <code>env</code> 换成了 <code>@babel/preset-env</code>, 可以配置 <code>targets</code>, <code>useBuiltIns</code> 等选项用于编译出兼容目标环境的代码。其中<code>useBuiltIns</code>如果设为 <code>&quot;usage&quot;</code>，Babel 会根据实际代码中使用的ES6/ES7代码，以及与你指定的targets，按需引入对应的 polyfill，而无需在代码中直接引入 <code>import &#39;@babel/polyfill&#39;</code>，避免输出的包过大，同时又可以放心使用各种新语法特性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;presets&quot;: [</span><br><span class="line">    [&quot;@babel/preset-env&quot;, &#123;</span><br><span class="line">      &quot;modules&quot;: false,</span><br><span class="line">      &quot;targets&quot;: &#123;</span><br><span class="line">        &quot;browsers&quot;: [&quot;&gt; 1%&quot;, &quot;last 2 versions&quot;, &quot;not ie &lt;= 8&quot;]</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;useBuiltIns&quot;: &quot;usage&quot;</span><br><span class="line">    &#125;]</span><br><span class="line">  ],</span><br><span class="line">  &quot;plugins&quot;: [&quot;transform-vue-jsx&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>####transform-runtime<br>对于开发应用来说，直接使用上述的按需 polyfill 方案是比较方便的，但如果是开发工具、库的话，这种方案未必适合（<code>babel-polyfill</code> 是通过向全局对象和内置对象的prototype上添加方法实现的，会造成全局变量污染）。Babel 提供了另外一种方案 <code>transform-runtime</code>，它在编译过程中只是将需要polyfill的代码引入了一个指向 <code>core-js</code> 中对应模块的链接(alias)。关于这两个方案的具体差异和选择，可以自行搜索相关教程，这里不再展开，下面提供一个 <code>transform-runtime</code>的参考配置方案。</p>
+<ul>
+<li><p>首先安装 runtime 相关依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @babel/plugin-transform-runtime</span><br><span class="line">npm install --save @babel/runtime</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>plugin-transform-runtime</code> 的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;presets&quot;: [</span><br><span class="line">    [&quot;@babel/preset-env&quot;, &#123;</span><br><span class="line">      &quot;modules&quot;: false,</span><br><span class="line">      &quot;targets&quot;: &#123;</span><br><span class="line">        &quot;browsers&quot;: [&quot;chrome 65&quot;]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">  ],</span><br><span class="line">  &quot;plugins&quot;: [&quot;transform-vue-jsx&quot;, [&quot;@babel/plugin-transform-runtime&quot;, &#123;</span><br><span class="line">      &quot;useBuiltIns&quot;: true</span><br><span class="line">      // &quot;polyfill&quot;: false</span><br><span class="line">    &#125;]</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这里解释一下 <code>useBuiltIns</code>（默认为 <code>false</code>） 和 <code>polyfill</code>（默认为 <code>true</code>） 两个选项，如果不配置或使用默认值，那 Babel 是会自动 polyfill 的（引入<code>core-js</code> polyfill 的alias），哪怕你指定的 targets 只有最新版chrome，最终编译出来的包会比较大，这不是我们所希望的。解决办法是通过配置 <code>polyfill</code>为 <code>false</code> 或 <code>useBuiltIns</code> 为<code>true</code> (二选一即可)，从而不引入 core-js 的 polyfill 。如果目标环境是较新的浏览器，可以按此配置，但是有一些最新的特性可能还需要单独 polyfill。个人认为，如果开发应用可以直接使用 <code>babel-polyfill</code> 方案，相对来说简单方便，编译输出的包大小也是可控的。</p>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>原工程中有测试模块，引入了相关依赖包。此次升级，为适配 webpack 4 和 babel 7 也调整了相关依赖及配置。如果你项目中不需要引入测试模块，可以考虑将以下依赖包移除：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&quot;@babel/register&quot;</span><br><span class="line">// 这个是 jest 为兼容 Babel 7 的一个依赖，注意不是 @babel/core</span><br><span class="line">&quot;babel-core&quot;: &quot;^7.0.0-bridge.0&quot;</span><br><span class="line">&quot;babel-jest&quot;</span><br><span class="line">&quot;regenerator-runtime&quot;</span><br><span class="line">&quot;chromedriver&quot;</span><br><span class="line">&quot;selenium-server&quot;</span><br><span class="line">&quot;jest&quot;</span><br><span class="line">&quot;jest-serializer-vue&quot;</span><br><span class="line">&quot;nightwatch&quot;</span><br><span class="line">&quot;selenium-server&quot;</span><br><span class="line">&quot;vue-jest&quot;</span><br></pre></td></tr></table></figure></p>
+<p>其他的一些调整如 <code>postcss.config.js</code> 等，可自行查看相关差异，不再赘述。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>webpack 工程作为一个针对大型应用设计的官方通用模板，为了兼容并包及开箱即用对工程配置做了一定程度的封装及开发辅助工具的整合，加快了项目开发的上手速度，但也对编译、构建工具的升级调整带来了一些不便。具体到实际项目中，可以根据情况对 webpack 的相关配置进行简化，比如只保留 <code>webpack.base.conf</code>, <code>webpack.dev.conf</code> 与 <code>webpack.prod.conf</code> 3个配置文件的结构即可，便于维护。</p>
+<p>本人对于 webpack，Babel 等工具的掌握也仅限于应用层面，只是想把此次摸索的成果与大家进行分享，如描述有误或不到位的地方，欢迎指正交流。</p>
+<p>参考：<br><a href="https://markus.oberlehner.net/blog/setting-up-a-vue-project-with-webpack-4-and-babel-7/" target="_blank" rel="noopener">Setting up a Vue.js Project with webpack 4 and Babel 7</a><br><a href="http://new.babeljs.io/docs/en/next/v7-migration.html" target="_blank" rel="noopener">Upgrade to Babel 7</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.bearnotes.net/2018/06/16/config-vue-project-with-webpack-4-and-babel-7/" data-id="cjihetd7n000229gbwmlfy9yc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/06/16/config-vue-project-with-webpack-4-and-babel-7/">Welcome tcomck 4 和 Babel 7 配置 Vue.js 工程模板</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 xsbear<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
