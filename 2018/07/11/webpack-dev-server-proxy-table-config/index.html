@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>webpack-dev-server proxyTable 配置实现跨站api代理访问 | BearNotes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="新H5应用项目欲实现前后端完全分离，脱离原来的后端框架，独立工程进行开发。Auth相关可以通过cookie共享解决，但接口访问就会涉及跨域，在尝试cors方案各种坑后，决定使用反向代理。至于代理方案，生产环境使用 nginx 可以轻松实现，但在开发阶段使用的是 webpack-dev-server，也需要支持代理访问接口。webpack官网文档并没有给出关于代理的详细配置，但其代理使用的是http">
+<meta name="keywords" content="webpack-dev-server,webpack,proxy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack-dev-server proxyTable 配置实现跨站api代理访问">
+<meta property="og:url" content="http://www.bearnotes.net/2018/07/11/webpack-dev-server-proxy-table-config/index.html">
+<meta property="og:site_name" content="BearNotes">
+<meta property="og:description" content="新H5应用项目欲实现前后端完全分离，脱离原来的后端框架，独立工程进行开发。Auth相关可以通过cookie共享解决，但接口访问就会涉及跨域，在尝试cors方案各种坑后，决定使用反向代理。至于代理方案，生产环境使用 nginx 可以轻松实现，但在开发阶段使用的是 webpack-dev-server，也需要支持代理访问接口。webpack官网文档并没有给出关于代理的详细配置，但其代理使用的是http">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-11T15:59:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack-dev-server proxyTable 配置实现跨站api代理访问">
+<meta name="twitter:description" content="新H5应用项目欲实现前后端完全分离，脱离原来的后端框架，独立工程进行开发。Auth相关可以通过cookie共享解决，但接口访问就会涉及跨域，在尝试cors方案各种坑后，决定使用反向代理。至于代理方案，生产环境使用 nginx 可以轻松实现，但在开发阶段使用的是 webpack-dev-server，也需要支持代理访问接口。webpack官网文档并没有给出关于代理的详细配置，但其代理使用的是http">
+  
+    <link rel="alternate" href="/atom.xml" title="BearNotes" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">BearNotes</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">关注Web开发，拥抱移动互联</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.bearnotes.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-webpack-dev-server-proxy-table-config" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/11/webpack-dev-server-proxy-table-config/" class="article-date">
+  <time datetime="2018-07-11T14:48:09.000Z" itemprop="datePublished">2018-07-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      webpack-dev-server proxyTable 配置实现跨站api代理访问
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>新H5应用项目欲实现前后端完全分离，脱离原来的后端框架，独立工程进行开发。Auth相关可以通过cookie共享解决，但接口访问就会涉及跨域，在尝试cors方案各种坑后，决定使用反向代理。至于代理方案，生产环境使用 nginx 可以轻松实现，但在开发阶段使用的是 webpack-dev-server，也需要支持代理访问接口。webpack官网文档并没有给出关于代理的详细配置，但其代理使用的是<code>http-proxy-middleware</code>，内部调用的是 <code>http-proxy</code>包予以实现代理。在 <a href="https://github.com/chimurai/http-proxy-middleware" target="_blank" rel="noopener">http-proxy-middleware</a> 文档中有关于 proxyTable 的详细配置。对于一般场景来说，主要是以下两个配置：</p>
+<ul>
+<li><p><code>changeOrigin</code><br>设置为 <code>true</code>  可修改转发header中host值为 target 的URL，对于使用多虚拟主机配置的服务器可以访问对应 host，也就是目标代理服务器，如果你的目标服务器不存在多虚拟机的情况，并且后端应用逻辑无需校验指定请求的URL，也可以忽略不设置</p>
+</li>
+<li><p><code>pathRewrite</code><br>重写请求url，保持与目标代理服务器的请求地址一致</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'/api/*'</span>: &#123;</span><br><span class="line">  target: <span class="string">'http://target.com/'</span>,</span><br><span class="line">  changeOrigin: <span class="literal">true</span>,</span><br><span class="line">  pathRewrite: &#123;</span><br><span class="line">    <span class="string">'^/api'</span> : <span class="string">''</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>经过rewrite后 <code>/api/users/info</code> -&gt;<code>/users/info</code>，如果不rewrite，目标地址会加上 /api 前缀，不符合目标服务器的url请求规</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.bearnotes.net/2018/07/11/webpack-dev-server-proxy-table-config/" data-id="cjkqjm16r0001smgbxhsjc4gm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/proxy/">proxy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack-dev-server/">webpack-dev-server</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/07/Vue-js-2-使用-runtime-only-build/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Vue.js 2 使用 runtime only build
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/16/config-vue-project-with-webpack-4-and-babel-7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Welcome tcomck 4 和 Babel 7 配置 Vue.js 工程模板</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel-7/">babel 7</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/runtime/">runtime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack-4/">webpack 4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack-dev-server/">webpack-dev-server</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Vue/" style="font-size: 20px;">Vue</a> <a href="/tags/babel-7/" style="font-size: 10px;">babel 7</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/runtime/" style="font-size: 10px;">runtime</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webpack-4/" style="font-size: 10px;">webpack 4</a> <a href="/tags/webpack-dev-server/" style="font-size: 10px;">webpack-dev-server</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/07/Vue-js-2-使用-runtime-only-build/">Vue.js 2 使用 runtime only build</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/11/webpack-dev-server-proxy-table-config/">webpack-dev-server proxyTable 配置实现跨站api代理访问</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/16/config-vue-project-with-webpack-4-and-babel-7/">Welcome tcomck 4 和 Babel 7 配置 Vue.js 工程模板</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 xsbear<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

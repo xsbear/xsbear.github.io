@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Vue.js 2 使用 runtime only build | BearNotes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="新项目中使用 Vue.js 2，随着开发的推进，对 Vue  的官方文档及源码的阅读和学习也在深入。与 React 的jsx相似， Vue 在底层的实现上，也是将模板编译成虚拟 DOM 渲染函数。而这个编译过程一般通过webpack 等构建工具提前完成，在代码运行时只需要引入runtime版本即可，无需实时编译，否则会对性能造成影响 。 使用 runtime 版本替代带编译器版本Vue的官方文档中">
+<meta name="keywords" content="Vue,runtime">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js 2 使用 runtime only build">
+<meta property="og:url" content="http://www.bearnotes.net/2018/08/07/Vue-js-2-使用-runtime-only-build/index.html">
+<meta property="og:site_name" content="BearNotes">
+<meta property="og:description" content="新项目中使用 Vue.js 2，随着开发的推进，对 Vue  的官方文档及源码的阅读和学习也在深入。与 React 的jsx相似， Vue 在底层的实现上，也是将模板编译成虚拟 DOM 渲染函数。而这个编译过程一般通过webpack 等构建工具提前完成，在代码运行时只需要引入runtime版本即可，无需实时编译，否则会对性能造成影响 。 使用 runtime 版本替代带编译器版本Vue的官方文档中">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-12T07:43:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue.js 2 使用 runtime only build">
+<meta name="twitter:description" content="新项目中使用 Vue.js 2，随着开发的推进，对 Vue  的官方文档及源码的阅读和学习也在深入。与 React 的jsx相似， Vue 在底层的实现上，也是将模板编译成虚拟 DOM 渲染函数。而这个编译过程一般通过webpack 等构建工具提前完成，在代码运行时只需要引入runtime版本即可，无需实时编译，否则会对性能造成影响 。 使用 runtime 版本替代带编译器版本Vue的官方文档中">
+  
+    <link rel="alternate" href="/atom.xml" title="BearNotes" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">BearNotes</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">关注Web开发，拥抱移动互联</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.bearnotes.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Vue-js-2-使用-runtime-only-build" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/07/Vue-js-2-使用-runtime-only-build/" class="article-date">
+  <time datetime="2018-08-07T14:17:32.000Z" itemprop="datePublished">2018-08-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Vue.js 2 使用 runtime only build
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>新项目中使用 Vue.js 2，随着开发的推进，对 Vue  的官方文档及源码的阅读和学习也在深入。与 React 的jsx相似， Vue 在底层的实现上，也是将模板编译成虚拟 DOM 渲染函数。而这个编译过程一般通过webpack 等构建工具提前完成，在代码运行时只需要引入runtime版本即可，无需实时编译，否则会对性能造成影响 。</p>
+<h2 id="使用-runtime-版本替代带编译器版本"><a href="#使用-runtime-版本替代带编译器版本" class="headerlink" title="使用 runtime 版本替代带编译器版本"></a>使用 runtime 版本替代带编译器版本</h2><p>Vue的官方文档中有对 <a href="https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only" target="_blank" rel="noopener">Runtime + Compiler vs. Runtime-only</a>的说明，如果项目中的Vue 实例没有用到 <code>template</code> 字符串或 dom 模板作为选项，则可以引入 runtime 版本的dist 文件，在 webpack 中可以配置一个别名予以简化引入。我们的项目使用了官方的webpack 工程模板（<a href="http://www.bearnotes.net/2018/06/16/config-vue-project-with-webpack-4-and-babel-7/">有经过改造</a>），在这里用的还是编译器版本的，于是将其调整为 runtime版本：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  resolve: &#123;</span><br><span class="line">    alias: &#123;</span><br><span class="line">      <span class="comment">// 'vue$': 'vue/dist/vue.esm.js',</span></span><br><span class="line">      <span class="string">'vue$'</span>: <span class="string">'vue/dist/vue.runtime.esm.js'</span>,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用-render-选项替代-template"><a href="#使用-render-选项替代-template" class="headerlink" title="使用 render 选项替代 template"></a>使用 render 选项替代 template</h2><p>项目中的组件模板都是通过单文件组件（<code>*.vue</code>文件）组织的，通过<code>vue-loader</code>已经提前编译成 render 函数，按理说可以使用 runtime 版本，但跑起来始终报 <code>You are using the runtime-only build of Vue where the template compiler is not available. Either pre-compile the templates into render functions, or use the compiler-included build.</code>  Debug 发现，原来入口文件<code>main.js</code>中初始化根组件时引入 <code>App</code>组件就用了 <code>template</code> 选项：<code>&#39;&lt;App/&gt;&#39;</code>，问题就在这里，改动方法也比较简单，就是将其改为 <code>render</code> 选项：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#app'</span>,</span><br><span class="line">  components: &#123; App &#125;,</span><br><span class="line">  <span class="comment">// template: '&lt;App/&gt;'</span></span><br><span class="line">  render: <span class="function"><span class="params">createElement</span> =&gt;</span> createElement(App)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>render</code> 选项传入的是一个回调函数，<code>createElement</code> 作为这个函数的参数，其实可以是任意一个有效函数名，但如文档所述，作为通用惯例，可以用<code>h</code> 来替代 <code>createElement</code>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于runtime版本的使用，官方文档都有详见的描述，但是由于使用了官方的 webpack 工程模板，默认使用了带编译器版本，而且没有对此细节的相关说明，也是踩了一个小坑。虽然官方说实时编译本来也已经很快了，但对大型应用来说，这个性能优化还是有必要的，而且runtime版本比带编译器版本的dist文件小了不少（生产构建版本当然不会差太多），也是能节省一点流量开销。</p>
+<p>不过，要使用 runtime 版本得确保组件实例里不存在 字符串template 选项或dom模板，可以根据自己的实际项目需求来定。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.bearnotes.net/2018/08/07/Vue-js-2-使用-runtime-only-build/" data-id="cjkqjm16l0000smgbkidtozs7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/runtime/">runtime</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/11/webpack-dev-server-proxy-table-config/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">webpack-dev-server proxyTable 配置实现跨站api代理访问</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel-7/">babel 7</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/runtime/">runtime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack-4/">webpack 4</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack-dev-server/">webpack-dev-server</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Vue/" style="font-size: 20px;">Vue</a> <a href="/tags/babel-7/" style="font-size: 10px;">babel 7</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/runtime/" style="font-size: 10px;">runtime</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webpack-4/" style="font-size: 10px;">webpack 4</a> <a href="/tags/webpack-dev-server/" style="font-size: 10px;">webpack-dev-server</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/07/Vue-js-2-使用-runtime-only-build/">Vue.js 2 使用 runtime only build</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/11/webpack-dev-server-proxy-table-config/">webpack-dev-server proxyTable 配置实现跨站api代理访问</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/16/config-vue-project-with-webpack-4-and-babel-7/">Welcome tcomck 4 和 Babel 7 配置 Vue.js 工程模板</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 xsbear<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
