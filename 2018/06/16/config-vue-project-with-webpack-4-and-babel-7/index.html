@@ -7,22 +7,22 @@
   
   <title>Welcome tcomck 4 和 Babel 7 配置 Vue.js 工程模板 | BearNotes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="团队最近开始一个新项目，技术栈采用 Vue.js 2 框架。由于是一个较复杂的大型单页应用，决定使用官方推荐的 webpack 工程作为应用工程脚手架。该工程模板中使用了 webpack 3 和 babel 6，由于 webpack 4 已发布，Babel 7 也出来挺长一段时间了，所以想对工程模板进行升级改造，以尝试工程化开发工具的最新特性。 关键调整webpack工程模板本身是为大型应用设计的">
+  <meta name="description" content="团队最近开始一个新项目，技术栈采用 Vue.js 2 框架。由于是一个较复杂的大型单页应用，决定使用官方推荐的 webpack 工程作为应用工程脚手架。该工程模板中使用了 webpack 3 和 babel 6，由于 webpack 4 已发布，Babel 7(beta) 也出来挺长一段时间了，所以想对工程模板进行升级改造，以尝试工程化开发工具的最新特性。 关键调整webpack工程模板本身是为大">
 <meta name="keywords" content="Vue,webpack 4,babel 7">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Welcome tcomck 4 和 Babel 7 配置 Vue.js 工程模板">
 <meta property="og:url" content="http://www.bearnotes.net/2018/06/16/config-vue-project-with-webpack-4-and-babel-7/index.html">
 <meta property="og:site_name" content="BearNotes">
-<meta property="og:description" content="团队最近开始一个新项目，技术栈采用 Vue.js 2 框架。由于是一个较复杂的大型单页应用，决定使用官方推荐的 webpack 工程作为应用工程脚手架。该工程模板中使用了 webpack 3 和 babel 6，由于 webpack 4 已发布，Babel 7 也出来挺长一段时间了，所以想对工程模板进行升级改造，以尝试工程化开发工具的最新特性。 关键调整webpack工程模板本身是为大型应用设计的">
+<meta property="og:description" content="团队最近开始一个新项目，技术栈采用 Vue.js 2 框架。由于是一个较复杂的大型单页应用，决定使用官方推荐的 webpack 工程作为应用工程脚手架。该工程模板中使用了 webpack 3 和 babel 6，由于 webpack 4 已发布，Babel 7(beta) 也出来挺长一段时间了，所以想对工程模板进行升级改造，以尝试工程化开发工具的最新特性。 关键调整webpack工程模板本身是为大">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/1.png">
 <meta property="og:image" content="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/2.png">
 <meta property="og:image" content="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/3.png">
 <meta property="og:image" content="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/4.png">
-<meta property="og:updated_time" content="2018-08-11T15:02:51.000Z">
+<meta property="og:updated_time" content="2018-09-01T14:41:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Welcome tcomck 4 和 Babel 7 配置 Vue.js 工程模板">
-<meta name="twitter:description" content="团队最近开始一个新项目，技术栈采用 Vue.js 2 框架。由于是一个较复杂的大型单页应用，决定使用官方推荐的 webpack 工程作为应用工程脚手架。该工程模板中使用了 webpack 3 和 babel 6，由于 webpack 4 已发布，Babel 7 也出来挺长一段时间了，所以想对工程模板进行升级改造，以尝试工程化开发工具的最新特性。 关键调整webpack工程模板本身是为大型应用设计的">
+<meta name="twitter:description" content="团队最近开始一个新项目，技术栈采用 Vue.js 2 框架。由于是一个较复杂的大型单页应用，决定使用官方推荐的 webpack 工程作为应用工程脚手架。该工程模板中使用了 webpack 3 和 babel 6，由于 webpack 4 已发布，Babel 7(beta) 也出来挺长一段时间了，所以想对工程模板进行升级改造，以尝试工程化开发工具的最新特性。 关键调整webpack工程模板本身是为大">
 <meta name="twitter:image" content="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/1.png">
   
     <link rel="alternate" href="/atom.xml" title="BearNotes" type="application/atom+xml">
@@ -96,7 +96,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>团队最近开始一个新项目，技术栈采用 Vue.js 2 框架。由于是一个较复杂的大型单页应用，决定使用官方推荐的 <a href="https://github.com/vuejs-templates/webpack" target="_blank" rel="noopener">webpack</a> 工程作为应用工程脚手架。该工程模板中使用了 webpack 3 和 babel 6，由于 webpack 4 已发布，Babel 7 也出来挺长一段时间了，所以想对工程模板进行升级改造，以尝试工程化开发工具的最新特性。</p>
+        <p>团队最近开始一个新项目，技术栈采用 Vue.js 2 框架。由于是一个较复杂的大型单页应用，决定使用官方推荐的 <a href="https://github.com/vuejs-templates/webpack" target="_blank" rel="noopener">webpack</a> 工程作为应用工程脚手架。该工程模板中使用了 webpack 3 和 babel 6，由于 webpack 4 已发布，Babel 7(beta) 也出来挺长一段时间了，所以想对工程模板进行升级改造，以尝试工程化开发工具的最新特性。</p>
 <h2 id="关键调整"><a href="#关键调整" class="headerlink" title="关键调整"></a>关键调整</h2><p>webpack工程模板本身是为大型应用设计的，构建脚本和配置文件的结构相比一般项目稍显复杂，添加了一些开发辅助工具，并且做了一定程度的封装。本次升级也是沿用了此套结构，只是对升级后的几个工具配置项做了调整。几个关键调整：除了 webpack 4 和 Babel 7，配套的 vue-loader 也升级到了 v15（官方的文档已经是v15了）；另外为了配套 webpack 4，<code>extract-text-webpack-plugin</code> 插件也被替换成了<code>mini-css-extract-plugin</code>，并且配合 <code>css-hot-loader</code><br>可实现提取css文件的热替换。主要配置项调整请看下文，前后配置代码差异可以见<a href="https://github.com/xsbear/vue-webpack4-babel7/compare/505c248...36b1805" target="_blank" rel="noopener">这里</a>，完整工程模板库地址：<a href="https://github.com/xsbear/vue-webpack4-babel7" target="_blank" rel="noopener">https://github.com/xsbear/vue-webpack4-babel7</a>，有需要的同学可以直接 clone。</p>
 <h3 id="基础配置-build-webpack-base-conf-js"><a href="#基础配置-build-webpack-base-conf-js" class="headerlink" title="基础配置 build/webpack.base.conf.js"></a>基础配置 build/webpack.base.conf.js</h3><p>这里的主要变化是新的 <code>vue-loader</code> 配置，由于新版配置选项发生变更，原来<code>vue-loader.conf.js</code>里的配置项基本已废弃，本方案直接将<code>transformAssetUrls</code>选项配置在了 <code>vue-loader</code> 的 rule options 里；另外需引入<code>vue-loader/lib/plugin</code>，以确保正确解析 <code>.vue</code>文件 <code>&lt;script&gt;</code>块中的js代码。</p>
 <p><img src="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/1.png" alt="图片描述"></p>
@@ -107,7 +107,7 @@
 <h3 id="生产模式配置-build-webpack-prod-conf-js"><a href="#生产模式配置-build-webpack-prod-conf-js" class="headerlink" title="生产模式配置 build/webpack.prod.conf.js"></a>生产模式配置 build/webpack.prod.conf.js</h3><p>这里的主要调整是为适配 webpack 4 的新配置。同样的，新增参数 mode: ‘production’；比较大的调整是 <code>optimization</code> 配置，替代了之前的 <code>CommonsChunkPlugin</code>, <code>UglifyJsPlugin</code> 等插件。另外如 <code>HashedModuleIdsPlugin</code> 等插件也已废弃，无需再配置。这里的重点是替代 <code>CommonsChunkPlugin</code> 插件的 <code>splitChunks</code> 配置项，目前给出的配置是可以满足 vendor 库和业务公用代码库分离的典型场景，更多分离优化的配置，有需要的同学可查找相关教程，由于不是本文重点，这里就不展开了。</p>
 <p><img src="http://paguchdsu.bkt.clouddn.com/vuejs-webpack4-babel7/4.png" alt="图片描述"></p>
 <h3 id="Babel-7-配置-babelrc"><a href="#Babel-7-配置-babelrc" class="headerlink" title="Babel 7 配置 .babelrc"></a>Babel 7 配置 .babelrc</h3><p>Babel 7 的相关依赖包需要加上 <code>@babel</code> scope。一个主要变化是 presets 设置由原来的 <code>env</code> 换成了 <code>@babel/preset-env</code>, 可以配置 <code>targets</code>, <code>useBuiltIns</code> 等选项用于编译出兼容目标环境的代码。其中<code>useBuiltIns</code>如果设为 <code>&quot;usage&quot;</code>，Babel 会根据实际代码中使用的ES6/ES7代码，以及与你指定的targets，按需引入对应的 polyfill，而无需在代码中直接引入 <code>import &#39;@babel/polyfill&#39;</code>，避免输出的包过大，同时又可以放心使用各种新语法特性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;presets&quot;: [</span><br><span class="line">    [&quot;@babel/preset-env&quot;, &#123;</span><br><span class="line">      &quot;modules&quot;: false,</span><br><span class="line">      &quot;targets&quot;: &#123;</span><br><span class="line">        &quot;browsers&quot;: [&quot;&gt; 1%&quot;, &quot;last 2 versions&quot;, &quot;not ie &lt;= 8&quot;]</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;useBuiltIns&quot;: &quot;usage&quot;</span><br><span class="line">    &#125;]</span><br><span class="line">  ],</span><br><span class="line">  &quot;plugins&quot;: [&quot;transform-vue-jsx&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>####transform-runtime<br>对于开发应用来说，直接使用上述的按需 polyfill 方案是比较方便的，但如果是开发工具、库的话，这种方案未必适合（<code>babel-polyfill</code> 是通过向全局对象和内置对象的prototype上添加方法实现的，会造成全局变量污染）。Babel 提供了另外一种方案 <code>transform-runtime</code>，它在编译过程中只是将需要polyfill的代码引入了一个指向 <code>core-js</code> 中对应模块的链接(alias)。关于这两个方案的具体差异和选择，可以自行搜索相关教程，这里不再展开，下面提供一个 <code>transform-runtime</code>的参考配置方案。</p>
+<h4 id="transform-runtime"><a href="#transform-runtime" class="headerlink" title="transform-runtime"></a>transform-runtime</h4><p>对于开发应用来说，直接使用上述的按需 polyfill 方案是比较方便的，但如果是开发工具、库的话，这种方案未必适合（<code>babel-polyfill</code> 是通过向全局对象和内置对象的prototype上添加方法实现的，会造成全局变量污染）。Babel 提供了另外一种方案 <code>transform-runtime</code>，它在编译过程中只是将需要polyfill的代码引入了一个指向 <code>core-js</code> 中对应模块的链接(alias)。关于这两个方案的具体差异和选择，可以自行搜索相关教程，这里不再展开，下面提供一个 <code>transform-runtime</code>的参考配置方案。</p>
 <ul>
 <li><p>首先安装 runtime 相关依赖</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @babel/plugin-transform-runtime</span><br><span class="line">npm install --save @babel/runtime</span><br></pre></td></tr></table></figure>
@@ -126,7 +126,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.bearnotes.net/2018/06/16/config-vue-project-with-webpack-4-and-babel-7/" data-id="cjkqjm16v0003smgb1fbhg7ic" class="article-share-link">Share</a>
+      <a data-url="http://www.bearnotes.net/2018/06/16/config-vue-project-with-webpack-4-and-babel-7/" data-id="cjljja0jd00032gwavgrzpe9s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel-7/">babel 7</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack-4/">webpack 4</a></li></ul>
